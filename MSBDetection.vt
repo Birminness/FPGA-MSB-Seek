@@ -1,0 +1,87 @@
+// Copyright (C) 1991-2013 Altera Corporation
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, Altera MegaCore Function License 
+// Agreement, or other applicable license agreement, including, 
+// without limitation, that your use is for the sole purpose of 
+// programming logic devices manufactured by Altera and sold by 
+// Altera or its authorized distributors.  Please refer to the 
+// applicable agreement for further details.
+
+// *****************************************************************************
+// This file contains a Verilog test bench template that is freely editable to  
+// suit user's needs .Comments are provided in each section to help the user    
+// fill out necessary details.                                                  
+// *****************************************************************************
+// Generated on "06/16/2023 17:59:14"
+                                                                                
+// Verilog Test Bench template for design : MSBDetection
+// 
+// Simulation tool : ModelSim-Altera (Verilog)
+// 
+
+`timescale 1 ns/ 1 ns
+module testbench_msb();
+// constants                                           
+// general purpose registers
+// test vector input registers
+reg clk;
+reg [22:0] in_data;
+reg nRESET;
+// wires                                               
+wire [4:0]  result;
+wire busy_o;
+
+// assign statements (if any)                          
+MSBDetection i1 (
+// port map - connection between master ports and signals/registers   
+	.clk(clk),
+	.in_data(in_data),
+	.nRESET(nRESET),
+	.result(result),
+	.busy_o(busy_o)
+);
+initial                                                
+begin                                                  
+// code that executes only once                        
+// insert code here --> begin                          
+clk <= 0;
+nRESET <= 0;
+in_data <= 34;
+
+#100 nRESET = 1;
+forever
+begin
+  #30 clk = ~clk;
+end                                             
+// --> end                                             
+$display("Running testbench");                       
+end
+
+ 
+
+
+reg [34:0] counter;           
+			  
+always  @(negedge nRESET or posedge clk)                                               
+// optional sensitivity list                           
+// @(event1 or event2 or .... eventn)                  
+begin                                                  
+// code executes for every event on sensitivity list   
+// insert code here --> begin                          
+        if(!nRESET)
+				counter <= 0;
+			else
+				begin
+					counter <= counter + 1;
+					if(counter == 500) in_data <= 23;
+					if (counter == 2500) in_data <= 135;
+				end
+// --> end                                             
+end                                                    
+endmodule
+
